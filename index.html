@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visor de Detecciones UAS - DGAC</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Visor de Detecciones UAS</h1>
+      <p>Mapa operacional de registros entregados en CSV</p>
+    </div>
+    <div class="badge">DGAC / Análisis</div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel">
+      <section class="card">
+        <h2>Resumen</h2>
+        <div class="stats">
+          <div><span id="statTotal">0</span><small>Total</small></div>
+          <div><span id="statMapeables">0</span><small>Mapeables</small></div>
+          <div><span id="statSinCoord">0</span><small>Sin coord.</small></div>
+          <div><span id="statRepetidos">0</span><small>ID repetidos</small></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Filtros</h2>
+        <label for="buscar">Buscar ID, tipo, sensor o frecuencia</label>
+        <input id="buscar" type="search" placeholder="Ej: Matrice, 2444, 1581..." />
+
+        <div class="row">
+          <div>
+            <label for="fechaDesde">Desde</label>
+            <input id="fechaDesde" type="date" />
+          </div>
+          <div>
+            <label for="fechaHasta">Hasta</label>
+            <input id="fechaHasta" type="date" />
+          </div>
+        </div>
+
+        <label class="check">
+          <input id="soloRepetidos" type="checkbox" />
+          Mostrar solo IDs repetidos
+        </label>
+
+        <label class="check">
+          <input id="mostrarTrayectorias" type="checkbox" checked />
+          Mostrar trayectorias inicio → última posición
+        </label>
+
+        <div class="buttons">
+          <button id="btnLimpiar">Limpiar filtros</button>
+          <button id="btnCentrar">Centrar mapa</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>IDs repetidos</h2>
+        <div id="listaRepetidos" class="list"></div>
+      </section>
+
+      <section class="card note">
+        <h2>Uso</h2>
+        <p>Para actualizar el visor, reemplaza el archivo <strong>drones.csv</strong> por un CSV nuevo con las mismas columnas.</p>
+      </section>
+    </aside>
+
+    <section id="map"></section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
